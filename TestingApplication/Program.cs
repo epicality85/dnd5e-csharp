@@ -36,14 +36,14 @@ internal class Program
 
         Console.WriteLine($"Roll 10 x D10 (total = {total})");
 
-        Abilities abilities = new Abilities()
-        {
-            Strength = 8, Charisma = 8, Constitution = 8, Dexterity = 8, Intelligence = 8, Wisdom = 8
-        };
+        //Abilities abilities = new Abilities()
+        //{
+        //    Strength = 8, Charisma = 8, Constitution = 8, Dexterity = 8, Intelligence = 8, Wisdom = 8
+        //};
 
-        PlayerCharacter player = new PlayerCharacter("Zarhog Bonesplitter", abilities);
+        PlayerCharacter player = new PlayerCharacter("Zarhog Bonesplitter", 15, 8, 16, 8, 14, 9);
 
-        player.CharacterDetails();
+        Console.WriteLine(player.ToString());
 
         Console.ReadLine();
     }

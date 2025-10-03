@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using dnd5e_cs.Abilities;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace dnd5e_cs
 {
@@ -16,28 +13,40 @@ namespace dnd5e_cs
         public PlayerCharacterRace PlayerCharacterRace { get; private set; } = PlayerCharacterRace.Human;
         public int WalkSpeed { get; private set; }
 
-        public Abilities PlayerAbilities { get; private set; }
+        public Ability[] Abilities { get; private set; } = new Ability[6];
 
-        public PlayerCharacter(string name, Abilities abilities)
+        public PlayerCharacter(string name, int str, int intl, int cons, int cha, int dex, int wis)
         {
             Name = name;
-            PlayerAbilities = abilities;
+            Abilities = [
+                new Strength(str), 
+                new Intelligence(intl), 
+                new Constitution(cons), 
+                new Charisma(cha), 
+                new Dexterity(dex), 
+                new Wisdom(wis)
+                ];
         }
 
-        public void CharacterDetails()
+        public override string ToString()
         {
-            Console.WriteLine($"Character Details for {Name}");
-            Console.WriteLine($"Character Desc: {Description}");
-            Console.WriteLine($"Character Race: {PlayerCharacterRace.ToString()}");
-            Console.WriteLine($"Character Background: {PlayerCharacterBackground.ToString()}");
-            Console.WriteLine();
-            Console.WriteLine("Abilities: ");
-            Console.WriteLine($"Strength: {PlayerAbilities.Strength}");
-            Console.WriteLine($"Dexterity: {PlayerAbilities.Dexterity}");
-            Console.WriteLine($"Constitution: {PlayerAbilities.Constitution}");
-            Console.WriteLine($"Intelligence: {PlayerAbilities.Intelligence}");
-            Console.WriteLine($"Wisdom: {PlayerAbilities.Wisdom}");
-            Console.WriteLine($"Charisma: {PlayerAbilities.Charisma}");
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine($"Character Details for {Name}");
+            sb.AppendLine($"Character Desc: {Description}");
+            sb.AppendLine($"Character Race: {PlayerCharacterRace.ToString()}");
+            sb.AppendLine($"Character Background: {PlayerCharacterBackground.ToString()}");
+            sb.AppendLine();
+            sb.AppendLine("Abilities: ");
+
+            foreach (var item in Abilities)
+            {
+                string sign = item.Modifier >= 0 ? "+" : "";
+                int modifier = item.Modifier;
+                sb.AppendLine($"{item.Name}: {item.Value} ({sign}{modifier})");
+            }
+
+            return sb.ToString();
         }
     }
 }
