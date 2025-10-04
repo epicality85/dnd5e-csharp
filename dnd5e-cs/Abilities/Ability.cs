@@ -8,17 +8,17 @@ namespace dnd5e_cs.Abilities
 {
     public abstract class Ability
     {
-        public virtual string Name => string.Empty;
+        public abstract string Name { get; }
 
         protected int _baseValue = 0;
 
-        public abstract int Value { get; set; }
+        public abstract int Value { get; }
 
         public int Modifier => (_baseValue - 10) / 2;
     }
 
     public interface IAbilityBonus
     {
-        int GetStrengthBonus();
+        int GetAbilityBonus();
     }
 }

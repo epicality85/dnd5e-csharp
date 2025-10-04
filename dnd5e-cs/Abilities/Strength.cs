@@ -6,15 +6,20 @@ using System.Threading.Tasks;
 
 namespace dnd5e_cs.Abilities
 {
-    internal class Strength : Ability
+    internal class Strength : Ability, IAbilityBonus
     {
-        public override string Name => "Strength";
+        public override string Name => GetType().Name;
 
-        public override int Value { get => _baseValue; set => throw new NotImplementedException(); }
+        public override int Value { get => _baseValue; }
 
         public Strength(int value = 8)
         {
             _baseValue = value;
+        }
+
+        public int GetAbilityBonus()
+        {
+            throw new NotImplementedException();
         }
     }
 }

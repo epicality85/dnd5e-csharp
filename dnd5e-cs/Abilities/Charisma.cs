@@ -8,9 +8,9 @@ namespace dnd5e_cs.Abilities
 {
     internal class Charisma : Ability
     {
-        public override string Name => "Charisma";
+        public override string Name => GetType().Name;
 
-        public override int Value { get => _baseValue; set => throw new NotImplementedException(); }
+        public override int Value { get => _baseValue; }
 
         public Charisma(int value = 8)
         {

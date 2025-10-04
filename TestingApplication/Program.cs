@@ -1,10 +1,13 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using dnd5e_cs;
 using dnd5e_cs.Dice;
-using static dnd5e_cs.Dice.DiceBag;
+using dnd5e_cs.Factories;
+using dnd5e_cs.Monsters;
 
 internal class Program
 {
+    static List<Monster> monsters = new List<Monster>();
+
     private static void Main(string[] args)
     {
         Console.WriteLine("Hello, World!");
@@ -15,13 +18,13 @@ internal class Program
 
         foreach (Dice dice in diceValues)
         {
-            Console.WriteLine($"Roll a D{(int)dice} -> {gameRules.DiceBag.Roll(dice)}");
+            Console.WriteLine($"Roll a D{(int)dice} -> {DiceBag.Instance.Roll(dice)}");
         }
 
         Dice diceToRoll = Dice.D10;
         int numberOfTimes = 10;
 
-        List<int> diceRolls = gameRules.DiceBag.RollQuantity(diceToRoll, numberOfTimes);
+        List<int> diceRolls = DiceBag.Instance.RollQuantity(diceToRoll, numberOfTimes);
 
         Console.WriteLine($"Roll {numberOfTimes} x D{(int)diceToRoll}");
         Console.WriteLine($"Avg: {numberOfTimes * (int)diceToRoll / 2.0f}");
@@ -41,9 +44,19 @@ internal class Program
         //    Strength = 8, Charisma = 8, Constitution = 8, Dexterity = 8, Intelligence = 8, Wisdom = 8
         //};
 
-        PlayerCharacter player = new PlayerCharacter("Zarhog Bonesplitter", 15, 8, 16, 8, 14, 9);
+        PlayerCharacter player = new PlayerCharacter("Zarhog Bonesplitter", 15, 8, 16, 8, 14, 9, new SetDiceValue(2, Dice.D10), 15);
 
         Console.WriteLine(player.ToString());
+
+        Monster monster = new Goblin("Rustlerxxaz");// MonsterFactory.CreateMonster("Goblin");
+        monsters.Add(monster);
+        monster = new Bandit("Paul");// MonsterFactory.CreateMonster("Bandit");
+        monsters.Add(monster);
+
+        foreach(Monster m in monsters)
+        {
+            Console.WriteLine(m.ToString());
+        }
 
         Console.ReadLine();
     }

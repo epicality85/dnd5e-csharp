@@ -6,20 +6,63 @@ using System.Threading.Tasks;
 
 namespace dnd5e_cs.Dice
 {
+    public enum Dice : uint { D2 = 2, D3 = 3, D4 = 4, D6 = 6, D8 = 8, D10 = 10, D12 = 12, D20 = 20, D100 = 100 }
+
+    public struct SetDiceValue
+    {
+        public int DiceNumber;
+        public Dice DiceTytpe;
+        public int PlusValue;
+
+        public SetDiceValue(int diceNumber, Dice diceType, int plusValue = 0)
+        {
+            DiceNumber = diceNumber;
+            DiceTytpe = diceType;
+            PlusValue = plusValue;
+        }
+    }
+
     public class DiceBag
     {
-        public enum Dice : uint { D2 = 2, D3 = 3, D4 = 4, D6 = 6, D8 = 8, D10 = 10, D12 = 12, D20 = 20, D100 = 100 }
+        private static DiceBag instance; 
+        private static Random _rand;
+        private static readonly object _lock = new object();
 
-        private Random _rand;
-
-        public DiceBag()
+        private DiceBag()
         {
             _rand = new Random(DateTime.Now.Second);
+        }
+
+        public static DiceBag Instance
+        {
+            get
+            {
+                lock (_lock)
+                {
+                    if (instance == null)
+                    {
+                        instance = new DiceBag();
+                    }
+                    return instance;
+                }
+            }
         }
 
         private int RollInternal(uint dice)
         {
             return 1 + _rand.Next((int)dice);
+        }
+
+        public int RollSetDiceValue(SetDiceValue setDiceValue)
+        {
+            int retVal = 0;
+
+            for(int i = 0; i < setDiceValue.DiceNumber; i++)
+            {
+                retVal += RollInternal((uint)setDiceValue.DiceTytpe);
+            }
+
+            return retVal + setDiceValue.PlusValue;
         }
 
         public int Roll(Dice dice)
@@ -56,6 +99,11 @@ namespace dnd5e_cs.Dice
                 diceRolls.Add(RollInternal((uint)dice));
             }
             return diceRolls;
+        }
+
+        public int RollSpecialNonDiceBetween(int minInc, int maxNonInc)
+        {
+            return _rand.Next(minInc, maxNonInc);
         }
     }
 }

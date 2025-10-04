@@ -8,9 +8,9 @@ namespace dnd5e_cs.Abilities
 {
     internal class Constitution : Ability
     {
-        public override string Name => "Constitution";
+        public override string Name => GetType().Name;
 
-        public override int Value { get => _baseValue; set => throw new NotImplementedException(); }
+        public override int Value { get => _baseValue; }
 
         public Constitution(int value = 0)
         {

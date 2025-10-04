@@ -8,9 +8,9 @@ namespace dnd5e_cs.Abilities
 {
     internal class Dexterity : Ability
     {
-        public override string Name => "Dexterity";
+        public override string Name => GetType().Name;
 
-        public override int Value { get => _baseValue; set => throw new NotImplementedException(); }
+        public override int Value { get => _baseValue; }
 
         public Dexterity(int value = 8)
         {

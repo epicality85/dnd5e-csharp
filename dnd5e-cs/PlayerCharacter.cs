@@ -1,4 +1,6 @@
 ﻿using dnd5e_cs.Abilities;
+using dnd5e_cs.Dice;
+using dnd5e_cs.Proficiencies;
 using System.Text;
 
 namespace dnd5e_cs
@@ -13,19 +15,24 @@ namespace dnd5e_cs
         public PlayerCharacterRace PlayerCharacterRace { get; private set; } = PlayerCharacterRace.Human;
         public int WalkSpeed { get; private set; }
 
+        protected int maxHitPoints;
+        public int ArmourClass { get; private set; }
+
         public Ability[] Abilities { get; private set; } = new Ability[6];
 
-        public PlayerCharacter(string name, int str, int intl, int cons, int cha, int dex, int wis)
+        public PlayerCharacter(string name, int str, int dex, int cons, int intl, int wis, int cha,  
+            SetDiceValue setDiceValue, int armourClass)
         {
             Name = name;
             Abilities = [
-                new Strength(str), 
-                new Intelligence(intl), 
+                new Strength(str),
+                new Dexterity(dex),
                 new Constitution(cons), 
-                new Charisma(cha), 
-                new Dexterity(dex), 
-                new Wisdom(wis)
+                new Intelligence(intl), 
+                new Wisdom(wis),
+                new Charisma(cha)
                 ];
+            ArmourClass = armourClass;
         }
 
         public override string ToString()
@@ -43,8 +50,25 @@ namespace dnd5e_cs
             {
                 string sign = item.Modifier >= 0 ? "+" : "";
                 int modifier = item.Modifier;
-                sb.AppendLine($"{item.Name}: {item.Value} ({sign}{modifier})");
+                sb.AppendLine($" {item.Name}: {item.Value} ({sign}{modifier})");
             }
+
+            //string prefix, unit = "";
+            sb.AppendLine("Proficiencies: ");
+            //foreach (var item in Proficiencies)
+            //{
+            //    prefix = item.Type == ProficiencyType.FixedValue ? "+" : "";
+            //    unit = item.Type == ProficiencyType.Distance ? "ft" : "";
+            //    sb.AppendLine($" {item.Name} : {prefix}{item.Value}{unit}");
+            //}
+
+            sb.AppendLine("Senses: ");
+            //foreach (var item in Senses)
+            //{
+            //    prefix = item.Type == ProficiencyType.FixedValue ? "+" : "";
+            //    unit = item.Type == ProficiencyType.Distance ? "ft" : "";
+            //    sb.AppendLine($" {item.Name} : {prefix}{item.Value}{unit}");
+            //}
 
             return sb.ToString();
         }

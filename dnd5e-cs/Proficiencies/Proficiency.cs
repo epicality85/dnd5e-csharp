@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 
 namespace dnd5e_cs.Proficiencies
 {
+    public enum ProficiencyType { Distance, FixedValue }
+
     public abstract class Proficiency
     {
-        public virtual string Name => string.Empty;
+        public abstract string Name {  get; }
+        public abstract int Value { get; protected set; }
+        public abstract ProficiencyType Type { get; }
     }
 
     public interface IProficiencyBonus

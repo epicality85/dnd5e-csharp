@@ -8,9 +8,9 @@ namespace dnd5e_cs.Abilities
 {
     internal class Intelligence : Ability
     {
-        public override string Name => "Intelligence";
+        public override string Name => GetType().Name;
 
-        public override int Value { get => _baseValue; set => throw new NotImplementedException(); }
+        public override int Value { get => _baseValue; }
 
         public Intelligence(int baseValue = 8)
         {
